@@ -1,4 +1,3 @@
-let eventTimeStamp = new Date(2026, 0, 1, 0, 0, 0).getTime();
 
 // dom elem
 const daysElem = document.querySelector('.timer .days')
@@ -6,69 +5,36 @@ const hoursElem = document.querySelector('.timer .hours')
 const minsElem = document.querySelector('.timer .mins')
 const secElem = document.querySelector('.timer .seconds')
 
-function convertime() {
-  let currentTimeStamp = new Date().getTime();
-  let remainingTimeStamp = eventTimeStamp - currentTimeStamp;
-  //console.log(remainingTimeStamp );
+// count interval
+let countdownInterval;
 
-//   if(remainingTimeStamp > 0){
-//     const seconds = Math.floor(remainingTimeStamp / 1000);
-//     const minutes = Math.floor(seconds / 60);
-//     const hours = Math.floor(minutes / 60);
-//     const days = Math.floor(hours / 24);
+function srartCountDown(){
+  clearInterval(countdownInterval)
 
-//     const remainingSeconds = seconds % 60;
-//     const remainingMinutes = minutes % 60;
-//     const remainingHours = hours % 24;
+  const targetDate = new Date('2026-01-01').getTime();
+  
+  countdownInterval = setInterval(() => {
+    const now = new Date().getTime();
+    const remainingTime = targetDate - now;
 
-//     setTimer(days, remainingHours, remainingMinutes, remainingSeconds)
-//   } else{
-//     setTimer('00', '00', '00', '00')
-//   }
+    if(remainingTime <= 0){
+      clearInterval(countdownInterval);
+      return;
+    };
 
-    const seconds = Math.floor(remainingTimeStamp / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
+    const days = Math.floor(remainingTime / (1000 * 60 * 60* 24))
+    const hours = Math.floor((remainingTime % (1000 * 60 * 60* 24)) / (1000 * 60 * 60))
+    const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60))
+    const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
-    const remainingSeconds = seconds % 60;
-    const remainingMinutes = minutes % 60;
-    const remainingHours = hours % 24;
 
-  return {
-    days: days,
-    hours: remainingHours,
-    minutes: remainingMinutes,
-    seconds: remainingSeconds,
-    remainingTimeStamp,
-  };
-}
+    daysElem.innerHTML = days;
+    hoursElem.innerHTML = hours;
+    minsElem.innerHTML = minutes;
+    secElem.innerHTML = seconds;
 
-function updateTimer() {
-  let interval = setInterval(() => {
-    // console.log('ok');
-    const {days, hrs, mins, seconds, remainingTimeStamp} = convertime()
-    // console.log(seconds)
-    if(remainingTimeStamp > 0){
-        // console.log('working')
-        setTimer(days, hrs, mins, seconds);
-    } else{
-        setTimer('00', '00', '00', '00');
-        clearInterval(interval)
-    }
+
   }, 1000);
+};
 
-}
-
-// updateTimer();
-
-
-
-function setTimer(days, hrs, mins, sec){
-    daysElem.innerHTML = days === undefined ? '00' : days;
-    hoursElem.innerHTML = hrs === undefined ? '00' : hrs;
-    minsElem.innerHTML = mins === undefined ? '00' : mins;
-    secElem.innerHTML = sec === undefined ? '00' : sec;
-}
-
-// setTimer()
+srartCountDown()
