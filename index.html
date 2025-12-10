@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,10 @@
     <link rel="stylesheet" href="./style.css">
     <script defer src="./main.js"></script>
 </head>
+
 <body>
     <div class="container">
-        <h1>welcome 2026</h1>
+        <h1>countdown timer</h1>
         <div class="timer-container">
             <div class="timer">
                 <h2 class="days">00</h2>
@@ -28,6 +30,13 @@
                 <p>seconds</p>
             </div>
         </div>
+
+        <div class="input">
+            <label for="dateInput">Enter target date & time:</label>
+            <input type="datetime-local" id="dateInput">
+            <button onclick="startCountdown()">Start Countdown</button>
+        </div>
     </div>
 </body>
+
 </html>
